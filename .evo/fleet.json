@@ -1,8 +1,4 @@
 {
-  "runtime": {
-    "kind": "python",
-    "executable": "python3"
-  },
   "build": [],
   "tests": [
     [
@@ -16,23 +12,37 @@
       "-v"
     ]
   ],
-  "artifact": "event_filter.py",
   "workload": {
     "argv": [
       "{runtime}",
       "-B",
       ".fleet/benchmark.py"
     ],
-    "timeout_s": 60,
-    "compare_stderr": false
+    "timeout_s": 60.0,
+    "timing_keys": [],
+    "cwd": ".",
+    "compare_stderr": false,
+    "objective": null,
+    "golden_lines": [],
+    "attach": null
   },
+  "artifact": "event_filter.py",
+  "generated_files": {},
+  "build_outputs": [],
   "harness_files": [
     "tests/test_event_filter.py",
     ".fleet/benchmark.py"
   ],
-  "build_outputs": [
-    "__pycache__",
-    "tests/__pycache__"
-  ],
-  "description": "Synthetic smoke test of hosted optimization delivery. Filter 20000 event records by 1500 allowed string IDs four times, preserving ordered outputs, identities and inputs. Complete process wall time includes corpus generation and correctness checks; no customer performance claim."
+  "entry_points": [],
+  "default_entry_point": null,
+  "description": "Synthetic smoke test of hosted optimization delivery. Filter 20000 event records by 1500 allowed string IDs four times, preserving ordered outputs, identities and inputs. Complete process wall time includes corpus generation and correctness checks; no customer performance claim.",
+  "compiler": "cc",
+  "runtime": {
+    "kind": "python",
+    "executable": "python3",
+    "import_paths": []
+  },
+  "external_build": null,
+  "diagnostic_probes": null,
+  "diagnostic_collectors": []
 }
