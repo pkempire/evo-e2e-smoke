@@ -1,0 +1,56 @@
+{
+  "schema": "fleet.setup.v1",
+  "source_revision": "c8757d23d2e966bb7014eb4eadb7dce56212dbac",
+  "instructions": "Measure and improve only event_filter.py against the immutable checked-in tests and benchmark. Preserve exact event values, order, duplicates, object identity and unchanged inputs. Synthetic smoke workload, not customer data.",
+  "entry_points": [
+    "event_filter.py:select_events",
+    ".fleet/benchmark.py"
+  ],
+  "toolchain": [
+    "Python 3 standard library only"
+  ],
+  "policies": {
+    "dependencies": "Use installed Python3; no packages or network needed.",
+    "submodules": "No submodules.",
+    "updates": "Pin this source revision; preserve tests and .fleet benchmark unchanged."
+  },
+  "tests": [
+    {
+      "id": "api-correctness",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 60
+    },
+    {
+      "id": "fixed-workload-oracle",
+      "argv": [
+        "python3",
+        "-B",
+        ".fleet/benchmark.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 60
+    }
+  ],
+  "experiment": {
+    "objective": "Minimize full-process elapsed seconds for four fixed passes filtering 20000 events against1500 allowed users.",
+    "measurement_boundary": "Includes deterministic input generation, selected-event function, fixed exact output checks and JSON digest production; same fixed process both candidates.",
+    "inputs": [
+      {
+        "path": ".fleet/benchmark.py",
+        "provenance": "synthetic",
+        "purpose": "both",
+        "description": "Fixed deterministic corpus generation and independent arithmetic equality oracle; explicitly a synthetic delivery smoke."
+      }
+    ]
+  }
+}
